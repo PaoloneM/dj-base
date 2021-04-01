@@ -56,3 +56,10 @@ Start server again and check it works, then you can stop it and run migrations w
 ```
 python manage.py migrate
 ```
+
+## Admin
+
+The admin interface is enabled by default, but you have to create an admin user before being able to access it:
+```
+python manage.py createsuperuser
+```
