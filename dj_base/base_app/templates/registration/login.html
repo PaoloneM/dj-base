@@ -5,7 +5,7 @@
 body {
   font: 13px/20px "Lucida Grande", Tahoma, Verdana, sans-serif;
   color: #404040;
-  background: #0ca3d2;
+  background: #484848;
 }
 
 .login {
@@ -179,7 +179,7 @@ input[type=submit]:active {
     {% if form.errors %}
         <p>Your username and password didn't match. Please try again.</p>
     {% endif %}
-    <p><input type="text" name="username" value="" placeholder="Username or Email" autocomplete="username"></p>
+    <p><input type="text" name="username" value="" placeholder="Username or Email"></p>
     <p><input type="password" name="password" value="" placeholder="Password"></p>
     <p class="submit"><input type="submit" name="commit" value="Login"></p>
   </form>
