@@ -1,3 +1,13 @@
+from .serializers import UserSerializer
 from django.shortcuts import render
+from rest_framework.views import APIView
+from rest_framework.response import Response
 
-# Create your views here.
+class UserGenericAPIView(APIView):
+
+    def get(self, request):
+        userSer = UserSerializer(request.user)
+        print(userSer.data)
+        return Response({
+                'data': userSer.data
+            })
