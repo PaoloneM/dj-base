@@ -1,4 +1,5 @@
 from django.urls import path
+from django.views.decorators.csrf import csrf_exempt
 
 from .views import (
     UserGenericAPIView
@@ -6,4 +7,5 @@ from .views import (
 
 urlpatterns = [
     path('user', UserGenericAPIView.as_view()),
+    path('user/<str:pk>', csrf_exempt(UserGenericAPIView.as_view())),
 ]
