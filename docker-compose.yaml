@@ -5,13 +5,24 @@ services:
   db:
     image: postgres
     restart: always
-    ports:
-      - 5432:5432
     environment:
       POSTGRES_PASSWORD: password
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+
 
   adminer:
     image: adminer
     restart: always
     ports:
       - 8080:8080
+
+  django:
+    build: ./dj_base
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./fixtures:/fixtures
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db

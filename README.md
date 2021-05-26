@@ -1,5 +1,7 @@
 # Django basic project
 
+This is a sample Django project that uses default rest framework auth, exposes user info and implements some simple api.
+
 ## How this is created
 
 If Python 3.7 is not installed, get it with
@@ -45,7 +47,7 @@ DATABASES = {
         'NAME': 'dj_base_db',
         'USER': 'postgres',
         'PASSWORD': 'password',
-        'HOST': '127.0.0.1',
+        'HOST': 'db',
         'PORT': '5432',
     }
 }
@@ -62,4 +64,24 @@ python manage.py migrate
 The admin interface is enabled by default, but you have to create an admin user before being able to access it:
 ```
 python manage.py createsuperuser
+```
+
+## Setting up full containerized deploy
+
+Once created, the project has been containerized. Current `docker-compose` file includes a service to run the Django project as a container. The following steps helps you in getting things running from scratch with Docker only.
+
+After creating the `dj_base_db` via Adminer, run the following commands
+
+```
+docker-compose restart django
+docker-compose run django python manage.py migrate
+docker-compose run django python manage.py createsuperuser
+docker-compose run django python manage.py loaddata /fixtures/products.json
+```
+
+## Sample api calls
+
+Get paginated list of products
+```
+http://127.0.0.1:8000/api/products?format=json&page=5&page_size=10
 ```
