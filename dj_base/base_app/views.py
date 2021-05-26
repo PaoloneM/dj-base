@@ -6,6 +6,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from django.contrib.auth.models import User
+import time
 class UserGenericAPIView(APIView):
 
     authentication_classes = (CsrfExemptSessionAuthentication,)
@@ -18,6 +19,7 @@ class UserGenericAPIView(APIView):
             })
 
     def put(self, request, pk, format=None):
+        time.sleep(2)
         user = User.objects.get(id =pk)
         userData = request.data
         serializer = UserSerializer(user, data=userData)
