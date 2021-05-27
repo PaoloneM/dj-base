@@ -1,5 +1,9 @@
 version: '3.1'
 
+networks:
+  http_network:
+    external: true
+
 services:
 
   db:
@@ -9,13 +13,19 @@ services:
       POSTGRES_PASSWORD: password
     volumes:
       - ./data/db:/var/lib/postgresql/data
+    networks:
+      - http_network
 
 
   adminer:
     image: adminer
     restart: always
-    ports:
-      - 8080:8080
+    networks:
+      - http_network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.adminer.rule=Host(`${FQDN}`) && PathPrefix(`/adminer`)"
+      - "traefik.http.routers.adminer.entrypoints=websecure"
 
   django:
     build: ./dj_base
@@ -26,3 +36,9 @@ services:
       - "8000:8000"
     depends_on:
       - db
+    networks:
+      - http_network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.django.rule=Host(`${FQDN}`) && PathPrefix(`/api`)"
+      - "traefik.http.routers.django.entrypoints=websecure"

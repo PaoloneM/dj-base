@@ -25,7 +25,7 @@ SECRET_KEY = '_iz3=3d5b7*2bwz^f6rn+-k9^^qi2wz$*07xzp!e7xmr!=r+$z'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['.smartlis.com']
 
 
 # Application definition
