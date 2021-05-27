@@ -3,25 +3,28 @@ version: '3.1'
 networks:
   http_network:
     external: true
+  db_network:
+    external: false
 
 services:
 
   db:
     image: postgres
-    restart: always
+    restart: unless-stopped
     environment:
       POSTGRES_PASSWORD: password
     volumes:
       - ./data/db:/var/lib/postgresql/data
     networks:
-      - http_network
+      - db_network
 
 
   adminer:
     image: adminer
-    restart: always
+    restart: unless-stopped
     networks:
       - http_network
+      - db_network
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.adminer.rule=Host(`${FQDN}`) && PathPrefix(`/adminer`)"
@@ -29,15 +32,15 @@ services:
 
   django:
     build: ./dj_base
+    restart: unless-stopped
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - ./fixtures:/fixtures
-    ports:
-      - "8000:8000"
     depends_on:
       - db
     networks:
       - http_network
+      - db_network
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.django.rule=Host(`${FQDN}`) && PathPrefix(`/api`)"
