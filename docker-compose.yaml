@@ -12,12 +12,11 @@ services:
     image: postgres
     restart: unless-stopped
     environment:
-      POSTGRES_PASSWORD: password
+      - POSTGRES_PASSWORD
     volumes:
       - ./data/db:/var/lib/postgresql/data
     networks:
       - db_network
-
 
   adminer:
     image: adminer
@@ -34,6 +33,12 @@ services:
     build: ./dj_base
     restart: unless-stopped
     command: python manage.py runserver 0.0.0.0:8000
+    environment:
+      - DATABASE_USER
+      - DATABASE_NAME
+      - DATABASE_PASSWORD
+      - DATABASE_HOST
+      - SECRET_KEY
     volumes:
       - ./fixtures:/fixtures
     depends_on:
