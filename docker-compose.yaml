@@ -26,8 +26,10 @@ services:
       - db_network
     labels:
       - "traefik.enable=true"
+      - "traefik.docker.network=http_network"
       - "traefik.http.routers.adminer.rule=Host(`${FQDN}`) && PathPrefix(`/adminer`)"
       - "traefik.http.routers.adminer.entrypoints=websecure"
+      - "traefik.http.services.adminer.loadbalancer.server.port=8080"
 
   django:
     build: ./dj_base
@@ -38,6 +40,7 @@ services:
       - DATABASE_NAME
       - DATABASE_PASSWORD
       - DATABASE_HOST
+      - ALLOWED_HOST=${FQDN}
       - SECRET_KEY
     volumes:
       - ./fixtures:/fixtures
@@ -48,5 +51,7 @@ services:
       - db_network
     labels:
       - "traefik.enable=true"
+      - "traefik.docker.network=http_network"
       - "traefik.http.routers.django.rule=Host(`${FQDN}`) && PathPrefix(`/api`)"
       - "traefik.http.routers.django.entrypoints=websecure"
+      - "traefik.http.services.django.loadbalancer.server.port=8000"
