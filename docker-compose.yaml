@@ -40,7 +40,7 @@ services:
       - DATABASE_NAME
       - DATABASE_PASSWORD
       - DATABASE_HOST
-      - ALLOWED_HOST=${FQDN}
+      - ALLOWED_HOSTS=${FQDN}
       - SECRET_KEY
     volumes:
       - ./fixtures:/fixtures
