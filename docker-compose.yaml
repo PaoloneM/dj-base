@@ -52,6 +52,6 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=http_network"
-      - "traefik.http.routers.django.rule=(Host(`${FQDN}`) && PathPrefix(`/api`)) || (Host(`${FQDN}`) && PathPrefix(`/accounts`)) || (Host(`${FQDN}`) && PathPrefix(`/admin`))"
+      - "traefik.http.routers.django.rule=(Host(`${FQDN}`) && PathPrefix(`/api`)) || (Host(`${FQDN}`) && PathPrefix(`/accounts`)) || (Host(`${FQDN}`) && PathPrefix(`/admin`)) || (Host(`${FQDN}`) && PathPrefix(`/static`))"
       - "traefik.http.routers.django.entrypoints=websecure"
       - "traefik.http.services.django.loadbalancer.server.port=8000"
